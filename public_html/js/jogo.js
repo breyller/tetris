@@ -7,27 +7,8 @@ $(document).ready(function(){
     var linhas = 24;
     var tabuleiro = null;
     var peca;
-    
-    var Bloco = function(xi, yi, cori){
 
-    };
-
-    Bloco.corFundo = "#FFFFFF";
-    Bloco.espaco = 1;
-    Bloco.tamanho = 30;
-
-    Bloco.pintar = function(context, x, y, corFrente){
-        context.fillStyle = Bloco.corFundo;
-        var x1 = x * Bloco.tamanho;
-        var y1 = y * Bloco.tamanho;
-        context.fillRect(x1, y1, Bloco.tamanho, Bloco.tamanho);
-        context.fillStyle = corFrente;
-        x1 = x1 + Bloco.espaco;
-        y1 = y1 + Bloco.espaco;
-        context.fillRect(x1, y1, Bloco.largura - Bloco.espaco * 2, Bloco.largura - Bloco.espaco * 2);
-    };
-
-        //o, i, j, l, t, u
+    //o, i, j, l, t, u
     var f = false;
     var v = true;
 
@@ -172,6 +153,30 @@ $(document).ready(function(){
 
     var pecas = [o, i, j, l, t, u];
 
+    var Bloco = function(x, y, cor){
+        this.x = x;
+        this.y = y;
+        this.estadoAtual = 0;
+        this.mapa = pecas[Math.round(Math.random() * (pecas.length-1))];
+        this.maxEstados = this.mapa.length;
+        this.cor = cor;
+    };
+
+    Bloco.corFundo = "#FFFFFF";
+    Bloco.espaco = 1;
+    Bloco.tamanho = 30;
+
+    Bloco.pintar = function(context, x, y, corFrente){
+        context.fillStyle = Bloco.corFundo;
+        var x1 = x * Bloco.tamanho;
+        var y1 = y * Bloco.tamanho;
+        context.fillRect(x1, y1, Bloco.tamanho, Bloco.tamanho);
+        context.fillStyle = corFrente;
+        x1 = x1 + Bloco.espaco;
+        y1 = y1 + Bloco.espaco;
+        context.fillRect(x1, y1, Bloco.largura - Bloco.espaco * 2, Bloco.largura - Bloco.espaco * 2);
+    };
+
     var tabuleiro = function(linhas, colunas){
         tabuleiro = new Array(linhas);
         for(var i = 0; i < colunas; i++){
@@ -179,10 +184,24 @@ $(document).ready(function(){
         }
     };
     
-    function limparTabuleiro(tabuleiro){
+    function limparTabuleiro(){
         for(var i = 0; i < linhas; i++){
             for(var j = 0; j < colunas; j++){
                 tabuleiro[i][j] = null;
+            }
+        }
+    }
+    
+    function pintarTudo(){
+        var i;
+        var j;
+        telaJogo.clearRect(0,0,canvas.width, canvas.height);
+        
+        for(i = 0; i < linhas; i++){
+            for(j = 0; j < colunas; j++){
+                if(tabuleiro[i][j] !== null){
+                    Bloco.pintar(telaJogo, i, j, tabuleiro[i][j]);
+                }
             }
         }
     }
@@ -195,6 +214,4 @@ $(document).ready(function(){
         btnPause.val('disabled', false);
         btnPause.html("Iniciar");
     }
-    
-    
 });
