@@ -1,0 +1,10 @@
+
+body{ background-color: black; }
+
+p{ text-align: center; }
+
+#jogo{ background-color: #FFF; border: solid #1fb706 2px; width: 364px; height: 724px; }
+
+button{ background-color: #FFF; border: 1px solid #1fb706; color: red; }
+
+button:disabled{ background-color: #DDDDDD; cursor: not-allowed; }
